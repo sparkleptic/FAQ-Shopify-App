@@ -1,0 +1,22 @@
+<%= form_with(model: faqcat, local: true) do |form| %>
+  <% if faqcat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(faqcat.errors.count, "error") %> prohibited this faqcat from being saved:</h2>
+
+      <ul>
+      <% faqcat.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :faqcat_title %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

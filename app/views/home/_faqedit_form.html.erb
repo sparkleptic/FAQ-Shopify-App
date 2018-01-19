@@ -1,0 +1,21 @@
+<%= form_for(faqpost, :url => {:controller => 'faqposts',:action => 'update', :id => fpost_id}) do |form| %>
+  <div class="field">
+    <%= label_tag(:faqcat_id, "Select Category:") %>
+    <%= form.collection_select :faqcat_id, Faqcat.all, :id, :title, {:selected => fcat_id}, {class: 'form-control  m-b' } %>
+  </div> 
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :faqpost_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content, :class => "tinymce", :rows => 40, :cols => 120 %>
+  </div>
+  
+  <div class="actions">
+      <%= form.submit 'Update FAQ', class: 'Polaris-Button' %>
+  </div>
+<% end %>
+

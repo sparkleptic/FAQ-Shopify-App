@@ -1,0 +1,11 @@
+<%= form_for(faqcat, :url => {:controller => 'faqcats',:action => 'update', :id => fcat_id}) do |form| %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :faqcat_title %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Update Category', class: 'Polaris-Button' %>
+  </div>
+<% end %>

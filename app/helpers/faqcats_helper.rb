@@ -1,0 +1,2 @@
+module FaqcatsHelper
+end

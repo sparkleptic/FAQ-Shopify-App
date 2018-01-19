@@ -1,0 +1,17 @@
+<div class="faq-list-sect">
+	<% @faqcats.each do |faqcat| %>
+	    <div class="faqart-listing">
+	        <h2><%= faqcat.title %></h2>
+	        <div class="clearfix faqpost-content">   
+	            <ul>
+	                <% Faqpost.where(faqcat_id: faqcat.id).each do |catfaq| %>
+	                    <li class="faq-listing">
+	                        <div class="faq-question"><%= catfaq.title %></div>
+	                        <div class="faq-answer" style="display:none;"><%= raw catfaq.content %></div>
+	                    </li> 
+	                <% end %>              
+	            </ul>
+	        </div>
+	    </div>
+	<% end %>
+</div>

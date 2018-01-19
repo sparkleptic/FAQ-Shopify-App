@@ -1,0 +1,11 @@
+<%= form_with(model: faqcat, local: true) do |form| %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :faqcat_title %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Create Category', class: 'Polaris-Button' %>
+  </div>
+<% end %>

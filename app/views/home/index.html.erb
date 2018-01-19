@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Faqapp</title>
+        
+        <%= csrf_meta_tags %>
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+        <link rel="stylesheet" href="https://sdks.shopifycdn.com/polaris/1.9.1/polaris.min.css" />
+        <%= stylesheet_link_tag "custom-style" %>
+        <%= javascript_include_tag "customtag" %>
+
+        <% content_for :javascript do %>
+          <script type="text/javascript">
+            ShopifyApp.ready(function(){
+                ShopifyApp.Bar.initialize({ title: "Home" });
+            });
+
+            tinyMCE.init({
+                selector: 'textarea.editor'
+              });
+
+          </script>
+        <% end %>
+    </head>
+    <body>
+
+        <div class="app-bar-content">
+            <% Faqcat.all.each do |faqcat| %>
+                <ul>
+                    <li>
+                        <div class="category-sect clearfix">
+                            <div class="left-cont-list">
+                                <span><%= faqcat.title %></span>
+                                <% ceditlink = edit_faqcat_path(faqcat).gsub("/","-") %>
+                                <div id="<%= ceditlink %>" class="form-edit-sect faq-form" style="display:none;">
+                                    <%= render partial: 'catedit_form', locals: {:faqcat => faqcat, :fcat_id => faqcat.id} %>
+                                </div>
+                            </div>
+
+                            <div class="right-cont-list">
+                                <!-- Category Edit Form -->
+                                <%= link_to 'Edit', edit_faqcat_path(faqcat), :remote => true, rel: edit_faqcat_path(faqcat), class: 'Polaris-Button tap-edit_sect' %>
+
+                                <!-- Category Destroy Form -->
+                                <span><%= link_to 'Destroy', faqcat, method: :delete, data: { confirm: 'Are you sure?' }, class: 'Polaris-Button', :remote => true %></span>
+
+                            </div>
+                        </div>
+                        
+                        <div class="faq-article-sect clearfix">
+                            <!-- Category's FAQ Listing -->    
+                            <ul style="padding-left:30px;">
+                                <% Faqpost.where(faqcat_id: faqcat.id).each do |catfaq| %>
+                                    <li>
+                                        <div class="faq-sect clearfix">
+                                            <div class="left-cont-list">
+                                                <span><%= catfaq.title %></span>
+                                                <% editlink = edit_faqpost_path(catfaq).gsub("/","-") %>
+                                                <div id="<%= editlink %>" class="form-edit-sect faq-form" style="display:none;">
+                                                    <%= render partial: 'faqedit_form', locals: {:faqpost => catfaq, :fpost_id => catfaq.id, :fcat_id => faqcat.id} %>
+                                                </div>
+                                            </div>
+                                            <div class="right-cont-list">
+                                                <!-- FAQ Edit Form -->
+                                                <%= link_to 'Edit', edit_faqpost_path(catfaq), :remote => true, rel: edit_faqpost_path(catfaq), class: 'Polaris-Button tap-edit_sect' %>
+                                                <%= link_to 'Destroy', catfaq, method: :delete, data: { confirm: 'Are you sure?' }, class: 'Polaris-Button', :remote => true %>
+                                                <!-- FAQ Destroy Form -->
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </li> 
+                                <% end %>
+                                <!-- FAQ ADD Form -->
+                                <div class="new-article-sect clearfix">
+                                    <li>
+                                        <%= link_to 'Add New Article', new_faqpost_path, :remote => true, rel: 'tap-new_faq', class: 'tap-new_sect' %>
+                                        <% @faqpost = Faqpost.new %>
+                                        <div id="tap-new_faq" class="form-new-sect faq-form" style="display:none;">
+                                            <div id="wysihtml5-toolbar">
+                                                <%= render partial: 'faq_form', locals: {:faqpost => @faqpost, :fcat_id => faqcat.id} %>
+                                            </div>
+                                        </div>
+                                    </li>    
+                                </div>                                
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+
+            <% end %>
+
+            <!-- Category Add Form -->
+            <div class="catnew-sect clearfix">
+                <ul class="cat-new">
+                    <li>
+                        <%= link_to 'Add New Category', new_faqcat_path, :remote => true, rel: 'tap-new_cat', class: 'tap-new_sect' %>
+                        <div id="tap-new_cat" class="form-new-sect" style="display:none;">
+                            <% @faqcat = Faqcat.new %>
+                            <%= render 'cat_form', faqcat: @faqcat %>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <%= tinymce %>
+
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Faqcats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @faqcats.each do |faqcat| %>
+      <tr>
+        <td><span><%= faqcat.id %> </span><%= faqcat.title %></td>
+        <%  %>
+        <table>
+          <tr>
+            <% Faqpost.where(faqcat_id: faqcat.id).each do |catfaq| %>
+                <td><span><%= catfaq.id %> </span><%= catfaq.title %></td>
+            <% end %>    
+          </tr>
+        </table>
+        
+
+        <td></td>
+        <td><%= link_to 'Show', faqcat %></td>
+        <td><%= link_to 'Edit', edit_faqcat_path(faqcat) %></td>
+        <td><%= link_to 'Destroy', faqcat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Faqcat', new_faqcat_path %>

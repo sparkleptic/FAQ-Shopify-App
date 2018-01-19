@@ -1,0 +1,19 @@
+<link rel="stylesheet" media="screen" href="https://71d7274c.ngrok.io/assets/custom-style.css">
+<script src="https://71d7274c.ngrok.io/assets/customtag.js"></script>
+<div class="faq-list-sect">
+	<% Faqcat.all.each do |faqcat| %>
+	    <div class="faqart-listing">
+	        <h2><%= faqcat.title %></h2>
+	        <div class="clearfix faqpost-content">   
+	            <ul>
+	                <% Faqpost.where(faqcat_id: faqcat.id).each do |catfaq| %>
+	                    <li class="faq-listing">
+	                        <div class="faq-question"><%= catfaq.title %></div>
+	                        <div class="faq-answer" style="display:none;"><%= raw catfaq.content %></div>
+	                    </li> 
+	                <% end %>              
+	            </ul>
+	        </div>
+	    </div>
+	<% end %>
+</div>

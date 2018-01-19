@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cat:</strong>
+  <% @faqcat = Faqcat.find(@faqpost.faqcat_id)  %>
+  <span id="<%= @faqpost.faqcat_id %>"><%= @faqcat.title %></span>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @faqpost.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @faqpost.content %>
+</p>
+
+<%= link_to 'Edit', edit_faqpost_path(@faqpost) %> |
+<%= link_to 'Back', faqposts_path %>
